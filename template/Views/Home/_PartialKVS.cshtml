@@ -1,0 +1,24 @@
+﻿@model List<template.Models.KVSBO>
+
+@for (int i = 0; i < Model.Count; i++)
+{
+    var item = Model[i];
+    var id = "";
+    if (item.OrderBy == 0) { id = "id=qua-tang"; }
+    else if (item.OrderBy == 1) { id = "id=feature"; }
+    if (MvcApplication.IsMobileMode())
+    {
+        <section @(id) class="wrapper page1 kvs c@(item.OrderBy)">
+            <img class="lazy" data-src="@item.BgImageMobile" />
+        </section>
+    }
+    else
+    {
+        var bg = string.Format(" data-background=\"{0}\" style=height:{1}px;",
+                item.BgImageDesk,
+                item.Height);
+        <section @(id) class="wrapper page1 kvs c@(item.OrderBy)">
+            <div class="bg lazybg" @bg></div>
+        </section>
+    }
+}

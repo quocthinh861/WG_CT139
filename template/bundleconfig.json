@@ -1,0 +1,53 @@
+[
+  {
+    "outputFileName": "Scripts/preorder.js",
+    "inputFiles": [
+      "Scripts/jquery-1.12.4.min.js",
+      "Scripts/ga_ecommerce.js",
+      "Scripts/jquery.colorbox.js",
+      "Scripts/jquery.lazyload.js",
+      "Scripts/owl.carousel.min.js",
+      "Scripts/perfect-scrollbar.min.js",
+      "Scripts/wow.min.js",
+      "Scripts/jquery.general.js",
+      "Scripts/jquery.order.js",
+      "Scripts/custom.js"
+    ]
+  },
+  {
+    "outputFileName": "Content/desktop.css",
+    "inputFiles": [
+      "Content/colorbox.css",
+      "Content/default-skin.min.css",
+      "Content/photoswipe.min.css",
+      "Content/perfect-scrollbar.min.css",
+      "Content/owl.carousel.css",
+      "Content/owl.theme.css",
+      "Content/general.desktop.css",
+      "Content/popup.css",
+      "Content/dev-order.css",
+      "Content/dev-desktop.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/mobile.css",
+    "inputFiles": [
+      "Content/colorbox.css",
+      "Content/default-skin.min.css",
+      "Content/photoswipe.min.css",
+      "Content/perfect-scrollbar.min.css",
+      "Content/owl.carousel.css",
+      "Content/owl.theme.css",
+      "Content/general.mobile.css",
+      "Content/popup.css",
+      "Content/dev-order.css",
+      "Content/dev-mobile.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/404.min.css",
+    "inputFiles": [
+      "Content/404.css"
+    ]
+  }
+]

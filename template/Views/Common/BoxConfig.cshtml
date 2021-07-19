@@ -1,0 +1,59 @@
+﻿@model template.Models.Product
+@{
+    List<template.Models.Product> Products = ViewBag.Products;
+    var idx = 0;
+}
+@if (Products != null && Products.Count > 1)
+{
+    <div class="tab">
+        @foreach (var item in Products)
+        {
+            <a href="#tab@(item.ProductId)" class="@(Model.ProductId == item.ProductId ? "active" : "")">@item.ProductName</a>
+        }
+    </div>
+}
+<div class="item cf-left">
+    @if (Model.Colors != null && Model.Colors.Any())
+    {
+        <img class="lazy p-img" data-src="@(Model.Colors.FirstOrDefault().pictureField)" />
+        if (Model.Colors.Count > 1)
+        {
+            <div class="p-color">
+                <span>Màu sắc: </span>
+                @foreach (var item in Model.Colors)
+                {
+                    <a href="javascript:;" class="@(idx++ == 0 ? "active" : "")" data-img="@item.pictureField" style="background-color:@item.colorCodeField"></a>
+                }
+            </div>
+        }
+    }
+
+    <b>
+        Giá: <b>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Price)</b>
+        @if (Model.HisPrice > Model.Price)
+        {
+            <i>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.HisPrice)</i>
+        }
+    </b>
+
+    @if (Model.IsSoldOut)
+    {
+        <a href="javascript:;" class="button medium gray inline">CHÁY HÀNG</a>
+    }
+    else if (Model.IsOff)
+    {
+        <a href="javascript:;" class="button medium gray inline">KẾT THÚC</a>
+    }
+    else
+    {
+        <a href="@Model.BuyUrl" class="button large orange inline">ĐẶT TRƯỚC<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.SalePrice)</i></a>
+        <a href="@Model.InstallmentUrl" class="button large blue inline">TRẢ GÓP@(Model.IsInstallment0Percent ? " 0%" : "")<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.SalePrice)</i></a>
+        <br />
+        <a href="@Model.InstallmentUrlMain" class="link">Xem bảng tính trả góp</a>
+    }
+</div>
+<div class="item cf-right">
+    <h3>Thông số kỹ thuật</h3>
+    @Html.Raw(Model.ShortSpecification)
+    <a href="javascript:PopupConfig(@Model.ProductId)" class="viewmore">Xem đầy đủ thông số kĩ thuật</a>
+</div>

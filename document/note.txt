@@ -1,0 +1,2 @@
+cms khai báo campaign: http://betacms.thegioididong.com/v2/Campaign/PreOrder
+account: 21299/123456

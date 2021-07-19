@@ -1,0 +1,17 @@
+﻿@using template.Controllers;
+@model template.Models.HomeVM
+
+@if (Model.Product.IsSoldOut) {
+    <a href="javascript:;" class="button medium gray inline">CHÁY HÀNG</a>
+} else if (BaseController.IsOffPreOrder) {
+    <a href="javascript:;" class="button medium gray inline">KẾT THÚC</a>
+} else {
+    <a href="@Model.Product.BuyUrl" class="button large orange inline">ĐẶT TRƯỚC<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+    <a href="@Model.Product.InstallmentUrl" class="button large blue inline">TRẢ GÓP@(Model.Product.IsInstallment0Percent ? " 0%" : "")<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+}
+<a href="javascript:OpenPopupUserOrder()" class="link">@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalOrder) khách mua (@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalPaid) cọc)</a>
+<div class="share">
+    <div>Tổng đài: <a href="@BaseController.Hotline(true)">@BaseController.Hotline()</a></div>
+    <div>Chia sẻ: </div>
+    <div class="like-fanpage" data-url="@BaseController.UrlCampaign"></div>
+</div>

@@ -1,0 +1,128 @@
+﻿.cls {position:absolute;right:10px;top:11px;width:20px;height:20px;cursor:pointer;z-index:999;}
+.cls:before {content:"×";font-size:32px;color:#fff;line-height:20px;text-align:center;width:100%;height:100%;font-family:Tahoma;display:block;}
+
+#popup {width:800px;position:relative;background-color:#fff;padding-bottom:0;}
+#popup>b {text-align:center;font-size:22px;padding:15px 0 12px 0;display:block;background-color:#333;margin-bottom:15px;color:#fff;font-weight:normal;}
+#popup>label {padding:15px 0;display:block;text-align:center;}
+
+#popup.login {width:500px;}
+#popup.login>div {padding:0 15px;text-align:center;}
+#popup.login>div>* {display:block;}
+#popup.login>div>span {margin-bottom:10px;line-height:1.4;}
+#popup.login>div>button {display:inline-block;vertical-align:top;}
+
+#popup.verify {width:500px;text-align:center;}
+#popup.verify>p {padding:0 10px;text-align:center;line-height:1.4;}
+#popup.verify>div.info {padding:10px 15px;background-color:#f1f1f1;text-align:center;margin:10px 0;}
+#popup.verify>div.info>* {display:inline-block;vertical-align:middle;}
+#popup.verify>div.info>img {width:50px;height:50px;border-radius:50%;margin-right:7px;}
+#popup.verify>div.info>span {text-align:left;line-height:1.4;}
+#popup.verify>form {padding:0 10px;text-align:center;}
+#popup.verify>form>* {display:block;}
+#popup.verify>form>b {text-align:center;font-weight:normal;font-size:16px;}
+#popup.verify>form>input {height:30px;line-height:30px;border:1px solid #ccc;width:68%;padding:0 2%;border-radius:4px;margin:5px auto;}
+#popup.verify>form>button {display:inline-block;}
+#popup.verify>form>a {padding-top:10px;color:#0521ff;}
+#popup.verify>form>p {padding:0 10px;line-height:1.5;}
+
+#popup.user-list {}
+#popup.user-list>form {text-align:center;}
+#popup.user-list>form>* {display:inline-block;vertical-align:middle;}
+#popup.user-list>form>span {text-align:right;width:180px;}
+#popup.user-list>form>span>b {display:block;font-size:16px;}
+#popup.user-list>form>div>* {display:inline-block;vertical-align:middle;}
+#popup.user-list>form>div.ul-key {margin:0 10px;position:relative;}
+#popup.user-list>form>div.ul-key>input {width:200px;height:30px;line-height:30px;border:1px solid #ccc;border-radius:4px;padding:0 30px 0 10px;display:block;}
+#popup.user-list>form>div.ul-key>button {position:absolute;width:16px;height:16px;background:transparent url(images/icon/btn-search.png) no-repeat center top;right:9px;top:8px;border:none;cursor:pointer;}
+#popup.user-list>div {padding:0 10px;position:relative;max-height:295px;overflow:hidden;margin:15px 0;}
+#popup.user-list>div>table {width:100%;}
+#popup.user-list>div>table th {padding:7px 10px;background-color:#f1f1f1;font-size:13px;text-align:left;}
+#popup.user-list>div>table th.tc {text-align:center;}
+#popup.user-list>div>table td {padding:10px;border-bottom:1px solid #ccc;}
+#popup.user-list>div>table td>a {color:#0091fb;}
+#popup.user-list>div>table td>a>b {font-weight:normal;}
+#popup.user-list>div>table td.check>b {color:#63bb02;background: transparent url(images/icon/iconcheckout@2x.png) no-repeat left center;background-size:260px 50px;background-position:-165px -25px;display:inline-block;padding-left:20px;height:16px;line-height:16px;font-weight:normal;font-size:13px;}
+#popup.user-list>div>table td.tc {text-align:center;}
+#popup.user-list>a.showmore {width:150px;display:block;margin:0 auto 15px auto;background-color:#333;color:#fff;text-align:center;height:30px;line-height:32px;font-size:13px;}
+#popup.user-list>div>p {padding:15px 0 35px 0;font-size:17px;text-align:center;}
+#popup.user-list>form>div.model {display:block;text-align:center;padding-top:15px;}
+#popup.user-list>form>div.model>a {display:inline-block;vertical-align:top;padding:0 20px;position:relative;margin-left:-4px;color:#333;}
+#popup.user-list>form>div.model>a.active {color:#0091fb;}
+#popup.user-list>form>div.model>a:not(:last-child):after {content:"|";position:absolute;right:0;top:0;color:#333;}
+
+#popup.history {width:500px;}
+#popup.history .his-profile {margin:-5px 0 10px 0;}
+#popup.history .his-profile>* {display:inline-block;vertical-align:middle;}
+#popup.history .his-profile>img {width:50px;height:50px;border:1px solid #ccc;margin-right:5px;border-radius:50%;}
+#popup.history .his-profile>span>* {display:block;}
+#popup.history .his-profile>span>a {color:#0099ff;font-size:16px;}
+#popup.history .his-profile>span>a>i {font-size:13px;font-style:normal;}
+#popup.history .his-profile>span>span {padding-top:3px;}
+
+#popup.invite {text-align:center;}
+#popup.invite>div {}
+#popup.invite>div>span {display:inline-block;vertical-align:top;position:relative;padding-left:35px;width:25%;text-align:left;margin-right:15px;line-height:1.5;}
+#popup.invite>div>span:after {position:absolute;width:26px;line-height:26px;height:26px;top:5px;left:0;border-radius:50%;background-color:#ffcc33;color:#333;text-align:center;font-weight:bold;}
+#popup.invite>div>span.s1:after {content:"1";}
+#popup.invite>div>span.s2:after {content:"2";}
+#popup.invite>div>span.s3:after {content:"";background:transparent url(images/icon/friend.png) no-repeat center top;}
+#popup.invite>div>em {display:block;padding:5px 10px 0 10px;}
+#popup.invite>div>em>a {color:#0091fb;}
+#popup.invite>div.link {padding:15px 10px;background-color:#f8f8f8;margin:10px 0;}
+#popup.invite>div.link>strong {display:block;font-size:15px;margin-bottom:10px;}
+#popup.invite>div.link>button {width:100px;height:32px;border:1px solid #ccc;}
+#popup.invite>div.link>input {height:30px;line-height:30px;padding:0 10px;border:1px solid #ccc;width:50%;margin-left:-5px;}
+#popup.invite>div.link>a {margin-top:5px;display:inline-block;vertical-align:top;}
+#popup.invite>div.friend {max-height:250px;position:relative;overflow:hidden;margin:0 2% 15px 2%;text-align:left;}
+#popup.invite>div.friend>b {font-size:15px;text-transform:uppercase;margin-bottom:10px;display:block;text-align:center;}
+#popup.invite>div.friend>p {display:inline-block;vertical-align:top;width:24%;margin-bottom:10px;}
+#popup.invite>div.friend>p>* {display:inline-block;vertical-align:middle;}
+#popup.invite>div.friend>p>img {width:50px;height:50px;margin-right:5px;border-radius:50%;border:1px solid #ccc;}
+#popup.invite>div.friend>p>a {color:#0099ff;max-width:60%;}
+#popup.invite>div.friend>a.showmore {width:150px;height:30px;line-height:30px;color:#000;background-color:#ffcc33;text-align:center;margin:auto;display:block;}
+
+#popup.vid>b {margin-bottom:0;}
+#popup.vid>iframe {width:100%;height:259px;background-color:#fff;display:block;}
+
+@media screen and (max-width:640px) {
+    #popup {width:460px !important;}
+    #popup.user-list>form>* {display:block;margin-bottom:5px;}
+    #popup.user-list>form>span {text-align:center;width:auto;}
+    #popup.user-list>form>span>b {display:inline-block;margin-right:5px;}
+    #popup.user-list>form>div.ul-key {width:262px;margin:0 auto 5px auto;}
+    #popup.user-list>form>div.ul-key>input {width:220px;}
+    #popup.user-list>div>table th:first-child, #popup.user-list>div>table td:first-child {text-align:left;}
+    #popup.user-list>div>table th:last-child {width:110px;}
+    #popup.user-list>div {padding:0 5px;max-height:200px;}
+
+    #popup.invite>div>span {display:block;width:auto;margin:0 10px 10px 10px;min-height:26px;}
+    #popup.invite>div>span:after {top:0;}
+    #popup.invite>div>em>span {display:block;}
+    #popup.invite>div.friend>p {width:47%;}
+}
+@media screen and (max-width:480px) {
+    #popup>b {font-size:16px;font-weight:normal;}
+}
+@media screen and (max-width:414px) {
+    #popup {width:394px !important;}
+    #popup.vid>iframe {height:222px;}
+}
+@media screen and (max-width:384px) {
+    #popup {width:364px !important;}
+    #popup.vid>iframe {height:205px;}
+}
+@media screen and (max-width:375px) {
+    #popup {width:355px !important;}
+    #popup.vid>iframe {height:200px;}
+}
+@media screen and (max-width:360px) {
+    #popup {width:340px !important;}
+    #popup.vid>iframe {height:192px;}
+}
+@media screen and (max-width:320px) {
+    #popup {width:300px !important;}
+    #popup.login>div {padding:0;}
+
+    #popup.invite>div.friend>p>img {width:40px;height:40px;}
+    #popup.vid>iframe {height:169px;}
+}

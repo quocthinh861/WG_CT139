@@ -1,0 +1,81 @@
+﻿@model Thinh.Models.Customer
+
+<div id="popup" class="user-list">
+    <a href="javascript:$.colorbox.close()" class="cls"></a>
+    <b>DANH SÁCH KHÁCH HÀNG</b>
+    <form id="frmSearchUserOrder">
+        <span><b>@thegioididong.business.helper.ViewHelper.ShowNumber(Model.Total)</b>khách đã @(Model.IsPaid ? "cọc" : "mua")</span>
+        <div class="ul-key">
+            <input type="text" placeholder="Nhập số điện thoại" name="keyword" value="@Model.Keyword">
+            <button onclick="return SearchUserOrder();"></button>
+        </div>
+        <div>
+            <input type="checkbox" id="cbPaid" name="cbPaid" onclick="return SearchUserOrder();" @(Model.IsPaid ? "checked=checked" : "") />
+            <span>Chỉ hiển thị danh sách cọc</span>
+        </div>
+        @*@if (Model.Products != null && Model.Products.Count > 1) {
+            <div class="model">
+                <a href="javascript:;" data-model="-1" class="@(Model.Model == -1 ? "active" : "")">Tất cả</a>
+                @foreach (var item in Model.Products) {
+                    <a href="javascript:;" data-model="@item.ProductId" class="@(Model.Model == item.ProductId ? "active" : "")">@item.ProductName</a>
+                }
+            </div>
+        }*@
+        <input type="hidden" name="hdModel" value="@Model.Model" />
+    </form>
+    <div class="u-list @(MvcApplication.IsMobileMode() ? "scroll" : "scrollbar")">
+        @if (Model.Customers != null && Model.Customers.Count > 0) {
+            <table cellpadding="0" cellspacing="0">
+                @if (MvcApplication.IsMobileMode()) {
+                    <tr class="trh">
+                        <th>Thông tin khách hàng</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                    foreach (var item in Model.Customers)
+                    {
+                        <tr>
+                            <td>
+                                <a href="javascript:void(0)"><b>@item.CUSTOMERNAME</b></a><br />
+                                @thegioididong.business.helper.ViewHelper.ShowPhoneNumber(item.CUSTOMERPHONE)
+                            </td>
+                            @if (item.ISINCOME == 1) {
+                                <td class="check"><b>Đã cọc</b><br />@thegioididong.business.helper.ViewHelper.ShowTime(item.VOUCHERDATE, " cọc")</td>
+                            } else {
+                                <td>Chưa cọc<br />---</td> 
+                            }
+                        </tr>
+                    }
+                } else {
+                    <tr class="trh">
+                        @*<th class="tc" style="width: 20px;">STT</th>*@
+                        <th>Tên khách hàng</th>
+                        <th>Số điện thoại</th>
+                        <th>Trạng thái</th>
+                        <th>Thời gian cọc</th>
+                    </tr>
+                    foreach (var item in Model.Customers)
+                    {
+                        <tr>
+                            @*<td class="tc">@(thegioididong.business.helper.ViewHelper.ShowNumber(Model.Index--))</td>*@
+                            <td><a href="javascript:void(0)"><b>@item.CUSTOMERNAME</b></a></td>
+                            <td>@thegioididong.business.helper.ViewHelper.ShowPhoneNumber(item.CUSTOMERPHONE)</td>
+                            @if (item.ISINCOME == 1) {
+                                <td class="check"><b>Đã cọc</b></td>
+                            } else {
+                               <td>Chưa cọc</td> 
+                            }
+                            <td>@(item.ISINCOME == 1 ? thegioididong.business.helper.ViewHelper.ShowTime(item.VOUCHERDATE, " cọc") : "--")</td>
+                        </tr>
+                    }
+                }                
+            </table>
+        } else {
+            <p>@(string.IsNullOrEmpty(Model.Keyword) ? "Đang cập nhật dữ liệu..." : string.Format("Không tìm thấy kết quả với từ khóa \"{0}\"", Model.Keyword))</p>
+        }
+    </div>
+    @if (Model.IsShowViewMore) {
+        <a class="showmore" href="javascript:ShowMoreUserOrder(@(Model.Page + 1))">CÒN @(thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalRemain)) KẾT QUẢ</a>
+    }
+</div>
+<a href="#popup" id="lpopup" style="display:none"></a>
+

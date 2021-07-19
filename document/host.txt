@@ -1,0 +1,7 @@
+127.0.0.1 www.campaign.vn
+
+10.1.6.210 betacms.thegioididong.com
+10.1.6.210 betaapi.thegioididong.com
+10.1.6.210 betaapi.dienmay.com
+10.1.4.103 betacrmservices.thegioididong.com
+10.1.6.210 betaerpsupportservices.thegioididong.com

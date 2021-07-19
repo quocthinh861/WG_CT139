@@ -1,0 +1,118 @@
+﻿@using template.Controllers;
+@model template.Models.HomeVM
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var version = new Random().Next();
+    var urlPath = BaseController.UrlPath;
+    var classTop = MvcApplication.IsFromMobileApp() ? "" : MvcApplication.IsTGDD() ? "sf" : "sx";
+    var idx = 0; var j = 0;
+    var objPromo = Model.Product.Promotions.FirstOrDefault();
+}
+@section CSS_INC {
+    @if (Request.Url.ToString().Contains(".thegioididong.com") || Request.Url.ToString().Contains(".dienmayxanh.com")) {
+        @Html.Raw(thegioididong.business.helper.ViewHelper.CssInline(urlPath, "mobile.min.css"))
+    } else {
+        <link href="~/Content/mobile.css?v=@version" rel="stylesheet" />
+    }
+        @if (!string.IsNullOrEmpty(BaseController.Program.CSSMobi)) {
+        <style>@Html.Raw(BaseController.Program.CSSMobi)</style>
+    }
+}
+
+@section JS_INC {
+    <script>
+        var rootUrl = '@(urlPath)';
+        var productId = '@(Model.Product == null ? -1 : Model.Product.ProductId)';
+        var method = '@(Request["m"] == null ? "-2" : Request["m"].ToString())';
+    </script> 
+    <script src="~/Scripts/preorder.min.js?v=@version"></script>
+}
+
+<section class="wrapper page1 key @classTop" style="background-image:url('@Model.Product.BgMobile')">
+    <img src="@Model.Product.TitleMobile" />
+    <span>Từ @Model.Product.FromDate.ToString("dd/MM") - @Model.Product.ToDate.ToString("dd/MM"). <a href="javascript:PopupHTML(@BaseController.Program.HtmlId)">Xem thông tin</a></span>
+    @if (objPromo != null && !string.IsNullOrEmpty(objPromo.PromotionImageMobile)) {
+        <div class="left">
+            <img src="@Model.Product.ImageMobile" />
+            <span>Màu: @string.Join(", ", Model.Product.Colors.Select(p => p.colorNameField))</span>
+            <b>Giá bán: <b>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.Price)</b></b>
+            @*@if (Model.IsShowClock) {
+                <div id="clock" class="clock" data-time="@BaseController.Program.ToDate.ToString("yyyy/MM/dd HH:mm:ss")" data-reload="0" data-showday="0" data-text="Còn lại"></div>
+            }*@
+        </div>
+        <div >
+            <img href="#qua-tang" class="inline scrollto" src="@objPromo.PromotionImageMobile" />
+            @foreach (var item in Model.Product.Promotions) {
+                <a href="@item.Url" class="p@(j++)"></a>
+            }
+        </div>
+    } else {
+        <img href="#qua-tang" class="scrollto" src="@Model.Product.ImageMobile" />
+        <span>Giá bán: <b>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.Price)</b><br />Có @Model.Product.Colors.Count màu: @string.Join(", ", Model.Product.Colors.Select(p => p.colorNameField))</span>
+    }
+    @Html.Partial("~/Views/Common/_PartialButton.cshtml")
+</section>
+<section class="wrapper page1 sticky">
+    <div class="container">
+        <a href="#feature" class="scrollto">Đặc điểm nổi bật</a>
+        <a href="#tab@(Model.Product.ProductId)" class="scrollto cf">Thông số kĩ thuật</a>
+        <a href="#gallery" class="scrollto">Hình ảnh sản phẩm</a>
+        @if (MvcApplication.IsTGDD())
+        {
+            <a href="#news" class="scrollto">Tin tức</a>
+        }
+        @if (!Model.Product.IsSoldOut && !Model.Product.IsOff)
+        {
+            <b>Giá bán: <b>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.Price)</b></b>
+            <a href="@Model.Product.BuyUrl" class="button small orange">ĐẶT TRƯỚC</a>
+            <a href="@Model.Product.InstallmentUrl" class="button small blue">TRẢ GÓP@(Model.Product.IsInstallment0Percent ? " 0%" : "")</a>
+        }
+    </div>
+</section>
+@if (Model.IsShowStore) {
+    <section id="trai-nghiem" class="wrapper page1 exp-store" data-top="85">
+        <style>
+            .exp-store {background-color:@(Model.BackgroundColor);}
+            .exp-store>div>b {color:@(Model.TextColor);}
+            .exp-store .storeexp div.store>span {color:@(Model.TextColor);}
+            .exp-store .storeexp div.store>span:before {background-color:@(Model.TextColor);}
+        </style>
+        <div><b>ĐÃ CÓ HÀNG TẠI SIÊU THỊ<br />TRẢI NGHIỆM NGAY!</b></div>
+        @*@Html.Action("_PartialGallery", Model.GalleriesStore)*@
+        @Html.Action("BoxStore")
+    </section>
+}
+
+@for (int i = 0; i < Model.KVSs.Count; i++) {
+    var kvss = Model.KVSs.Where(p => p.OrderBy == i).OrderBy(p => p.Title).ToList();
+    if (kvss == null || kvss.Count == 0) { continue; }
+    if (kvss.FirstOrDefault().OrderBy == 1) { @Html.Partial("_PartialVideo", BaseController.Program) }
+    @Html.Partial(kvss.Count > 1 ? "_PartialSlider" : "_PartialKVS", kvss)
+}
+
+@foreach (var item in Model.Products) {
+    <section id="tab@(item.ProductId)" class="wrapper config page1 @(idx++ > 0 ? "hide" : "")">
+        @Html.Action("BoxConfig", "Common", new { productId = item.ProductId })
+    </section>
+}
+
+@if (Model.Gallerys != null && Model.Gallerys.Any()) {
+    <section id="gallery" class="wrapper picture page1">
+        <h3>THƯ VIỆN HÌNH ẢNH</h3>
+        @Html.Partial("~/Views/Common/_PartialGallery.cshtml", Model.Gallerys)
+    </section>
+}
+<section class="wrapper user-order page1">
+    <div class="uo-left scroll">
+        @Html.Raw(thegioididong.business.helper.ConfigHelper.GetHtmlInfoByID(BaseController.Program.HtmlId, Model.IsRemoveCache))
+    </div>
+    <div class="uo-right">
+        @Html.Action(BaseController.IsSMS ? "BoxUserSMS" : "BoxUserOrder", "Order")
+    </div>
+</section>
+@if (MvcApplication.IsTGDD()) {
+    <section id="news" class="wrapper news page1">
+        @Html.Action("BoxNews", "Common")
+    </section>
+}
+<section id="order" class="wrapper content-77 page2 hide @classTop"></section>

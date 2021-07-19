@@ -1,0 +1,205 @@
+﻿.vuivui header input {font:400 12px Arial;}
+
+.share {position:relative;z-index:99;}
+.share>div {height:20px;overflow:hidden;display:inline-block;vertical-align:middle;margin-bottom:5px;font-size:15px;}
+.share>div:first-child, .share>div:nth-child(2) {margin-right:7px;height:auto;font-size:15px;color:#333;overflow:visible;}
+.share>div:first-child>img {display:inline-block;margin:0 5px;vertical-align:top;}
+.share>div:first-child>a {color:#0a65ac;font-weight:bold;}
+.sticky {
+    background: #ddd;
+    text-align: center;
+}
+
+    .sticky > div > a {
+        display: inline-block;
+        height: 25px;
+        font-size: 12px;
+        text-align: center;
+        text-transform: uppercase;
+        color: #003776;
+        font-weight: bold;
+        padding: 10px 10px 0px;
+        width: max-content;
+    }
+
+        .sticky > div > a:hover:not(.button) {
+            background: rgba(255,255,255,.7);
+        }
+
+        .sticky > div > a.button {
+            height: 30px;
+            line-height: 32px;
+            padding: 0 20px;
+        }
+
+            .sticky > div > a.button.orange {
+                margin: 0 10px 0 15px;
+            }
+
+    .sticky > div > b {
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 13px;
+        margin-left: 20px;
+    }
+
+        .sticky > div > b > b {
+            color: #ff0011;
+            font-size: 16px;
+        }
+.video {background-color:#000;}
+.youtube {position:relative;display:block;background-color:#000;}
+.youtube.play:after {content:"";position:absolute;width:57px;height:40px;background:transparent url(images/icon/play.png) no-repeat center top;left:0;right:0;top:0;bottom:0;margin:auto;background-size:57px 80px;}
+.youtube.play:hover:after {background-position:0 -40px}
+.youtube>img {max-width:100%;display:block;}
+
+.subscribe {text-align:center;padding:20px 0;}
+.subscribe>h3 {font-size:26px;}
+.subscribe>div {margin:15px 0 10px 0;}
+.subscribe>div>span {display:inline-block;margin-right:10px;cursor:pointer;}
+.subscribe>div>span>* {display:inline-block;vertical-align:middle;}
+.subscribe>div>span>i {width:12px;height:12px;border:1px solid #ccc;padding:3px;border-radius:50%;margin-right:5px;background-color:#fff;}
+.subscribe>div>span>b {font-size:15px;font-weight:normal;}
+.subscribe>div>span.active>i:after {content:"";display:block;height:100%;background-color:#f79000;border-radius:50%;}
+.subscribe>input {width:43%;height:35px;line-height:35px;border-radius:4px;margin-bottom:10px;border:1px solid #ccc;padding:0 10px;font-size:16px;display:inline-block;vertical-align:middle;}
+.subscribe>button {cursor:pointer;width:200px !important;}
+
+.key {text-align:center;padding:15px 0 0 0;background-position:center center;background-size:cover;background-repeat:no-repeat;}
+.key>* {display:block;margin-bottom:10px;}
+.key img {max-width:100%;display:block;margin-left:auto;margin-right:auto;}
+.key>img:first-child {max-width:90%;}
+.key>img:nth-child(3) {max-width:90%;}
+.key>img:nth-child(5) {max-width:96%;}
+.key>span {font-size:15px;margin-top:5px;line-height:1.4;}
+.key>span>a {color:#288ad6;}
+.key>span>b {color:#ff0011;font-size:19px;}
+.key>a.link {color:#288ad6;font-size:15px;}
+.key>a.button {display:inline-block;vertical-align:top;padding-left:0;padding-right:0;width:47%;max-width:180px;}
+.key div.left {display:inline-block;vertical-align:top;max-width:60%;position:relative;}
+.key div.left>* {display:block;}
+.key div.left>img {max-width:94%;margin:auto;}
+.key div.left>span {font-size:12px;color:#fff;padding:10px 0;}
+.key div.left>b {font-size:16px;color:#fff;}
+.key div.left>b>b {font-size:28px;color:#fff200;}
+.key>div.inline {max-width:33%;display:inline-block;vertical-align:top;position:relative;}
+.key>div.inline>a {position:absolute;}
+
+.kvs>img {display:block;max-width:100%;}
+
+.owl-kvs {background-color:#e4e4e4;}
+.owl-kvs .owl-controls {position:static;margin-top:0;}
+.owl-kvs .owl-pagination {display:none;}
+.owl-kvs .owl-buttons div {display:block !important;position: absolute;overflow: hidden;display: inline-block;font-size:12px;width:2em;height:2em;top:0 !important;background:none !important;-webkit-border-radius:0 !important;border-radius:0 !important;bottom:0 !important;margin:auto !important;padding:0 !important;opacity:1 !important;}
+.owl-kvs .owl-buttons div.owl-prev {border-top:2px solid #333;border-left:2px solid #333;transform: rotate(-54deg) skew(-20deg);left:10px;}
+.owl-kvs .owl-buttons div.owl-next {border-top:2px solid #333;border-right:2px solid #333;transform:rotate(54deg) skew(20deg);right:10px;}
+
+.exp-store  {overflow:visible !important;padding:20px 0;text-align:center;}
+.exp-store>div>b {font-size:20px;line-height:1.4;margin-bottom:10px;text-transform:uppercase;text-align:center;display:block;}
+.exp-store .storeexp>div.inline {width:48%;margin:0 0 10px 0;position:relative;z-index:2;text-align:left;display:inline-block;vertical-align:middle;}
+.exp-store .storeexp>div.inline>span {color:#288ad6;padding:0 15px 0 10px;border:1px solid #ccc;background-color:#fff;display:block;height:38px;line-height:38px;position:relative;cursor:pointer;border-radius:3px;}
+.exp-store .storeexp>div.inline>span:after {
+    content: '';
+    width: 0;
+    right: 0;
+    border-top: 6px solid #288ad6;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 17px 10px 0 0;
+    float: right;
+    position: absolute;
+}
+.exp-store .storeexp>div.address {display:block;}
+.exp-store .storeexp>div>input {height:38px;line-height:38px;padding:0 10px;border:1px solid #ccc;border-radius:3px;width:92.3%;}
+.exp-store .storeexp>label {display:block;padding:5px 10px;margin:10px 20px 0 0;background:rgba(255,0,0,0.08);border:1px solid #FF0000;border-radius:3px;color:#ff0000;}
+.exp-store .storeexp div.select {position:absolute;width:300px;padding:10px;border:1px solid #ccc;border-radius:3px;background-color:#fff;top:44px;display:none;z-index:9;}
+.exp-store .storeexp div.select:before, .exp-store .storeexp div.select:after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50px;
+    width: 0;
+    height: 0;
+    border-bottom: 10px solid #ccc;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+.exp-store .storeexp div.select:after {
+    border-width: 9px;
+    margin-left: 1px;
+    border-bottom-color: #fff;
+}
+.exp-store .storeexp div.inline.district>div.select {right:0;}
+.exp-store .storeexp div.inline.district>div.select:before, .exp-store .storeexp div.inline.district>div.select:after {
+    left: 220px;
+}
+.exp-store .storeexp div.select>* {display:block;}
+.exp-store .storeexp div.select>.o-search {position:relative;}
+.exp-store .storeexp div.select>.o-search>* {display:inline-block;vertical-align:middle;}
+.exp-store .storeexp div.select>.o-search>input {height:30px;line-height:30px;padding:0 40px 0 10px;border-radius:3px;border:1px solid #ccc;width:248px;}
+.exp-store .storeexp div.select>.o-search>button {background:transparent url(images/icon/btn-search.png) no-repeat center center;border:none;width:30px;height:32px;margin-left:-30px;position:absolute;right:0;top:0;}
+.exp-store .storeexp div.select>.list {position:relative;max-height:150px;overflow:hidden;overflow-y:scroll;}
+.exp-store .storeexp div.select>.list>div.item {width:47%;float:left;}
+.exp-store .storeexp div.select>.list>div.item:first-child {margin-right:10px;}
+.exp-store .storeexp div.select>.list>div.item>a {display:block;padding:10px 0 0 0;color:#288ad6;}
+.exp-store .storeexp div.select>.list .ps-scrollbar-y-rail {right:0 !important;}
+.exp-store .storeexp div.store {max-height:200px;position:relative;overflow:hidden;margin:auto;display:block;max-width:96%;}
+.exp-store .storeexp div.store>b {padding:0;margin-bottom:5px;display:block;text-align:left;}
+.exp-store .storeexp div.store>span {display:block;margin-bottom:10px;font-size:14px;padding-left:14px;position:relative;text-align:left;}
+.exp-store .storeexp div.store>span>* {vertical-align:top;}
+.exp-store .storeexp div.store>span>i {margin-top:2px;}
+.exp-store .storeexp div.store>span>b {line-height:1.4;}
+.exp-store .storeexp div.store>span:before {content:"";width:6px;height:6px;border-radius:50%;background-color:#ff6a00;left:0;top:5px;position:absolute;}
+.exp-store .storeexp div.store>span.no {padding-left:0;}
+.exp-store .storeexp div.store>span.no:before {display:none;}
+.exp-store .tab {display:block;margin-bottom:15px;}
+.exp-store .tab>* {display:inline-block;vertical-align:middle;margin-right:10px;font-size:16px;}
+.exp-store .tab>a>* {display:inline-block;vertical-align:top;}
+.exp-store .tab>a:first-child {padding-right:20px;margin-right:10px;position:relative;}
+.exp-store .tab>a:first-child:after {content:"|";position:absolute;right:0;top:0;bottom:0;margin:auto;color:#333;}
+.exp-store .tab>a>i {width:10px;height:10px;border:1px solid #ccc;border-radius:50%;padding:3px;margin-right:3px;}
+.exp-store .tab>a>span {color:#333;}
+.exp-store .tab>a.active>i:before {content:"";display:block;height:100%;border-radius:50%;}
+
+@media screen and (max-width:480px) {
+    .exp-store>div>b {font-size:25px;}
+}
+
+@media screen and (max-width:414px) {
+    .subscribe>input {width:90%;}
+
+    .exp-store>div>b{font-size:20px;}
+
+    .key div.left>span {padding:5px 0;}
+    .key div.left>b {font-size:14px;}
+    .key div.left>b>b {font-size:20px;}
+}
+
+@media screen and (max-width:384px) {
+    
+}
+
+@media screen and (max-width:375px) {
+    .share>div:first-child, .share>div:nth-child(2) {font-size:13px;margin-right:3px;}
+}
+
+@media screen and (max-width:360px) {
+    .exp-store>div>b{font-size:18px;}
+}
+
+@media screen and (max-width:320px) {
+    .share>div:first-child, .share>div:nth-child(2) {font-size:12px;margin-right:3px;}
+    .share>div.like-fanpage {width:130px;}
+
+    .exp-store>div>b{font-size:17px;}
+    .exp-store .storeexp>div.inline>span {font-size:12px;height:32px;line-height:32px;}
+    .exp-store .storeexp>div.inline>span:after {margin-top:13px;}
+    .exp-store .storeexp div.select {width:288px;top:38px;}
+    .exp-store .storeexp div.select>.o-search>input {width:238px;}
+    .exp-store .storeexp div.store>span {margin-bottom:7px;}
+
+    .key div.left>span {font-size:10px;padding:2px 0 0 0;}
+    .key div.left>b {font-size:13px;}
+    .key div.left>b>b {font-size:18px;}
+}

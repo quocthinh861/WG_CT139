@@ -1,0 +1,48 @@
+﻿﻿@using thegioididong.business.viewModels
+@model ViewModelSpecificationParams
+<ul class="parameterfull">
+    @foreach (var group in Model.lstParams.OrderBy(o => o.DisplayOrder).ToList())
+    {
+        if (group.lstParams.Count > 0 && Model.lstParams.Count > 1)
+        {
+            <li data-id="@group.GroupId" data-index="@group.DisplayOrder"><label>@group.GroupName</label></li>
+        }
+        foreach (var param in group.lstParams)
+        {
+            var IsLine = param.Links.Count >= 3;
+            <li data-id="@param.PropId" data-index="@param.DisplayOrder" class="g@(param.PropId) p@(Model.ProductID) @(IsLine ? "line" : "")">
+                @if (!string.IsNullOrEmpty(param.PropUrl) && MvcApplication.IsTGDD())
+                {
+                    <span><a href="@param.PropUrl" target="_blank">@param.PropName</a></span>
+                }
+                else
+                {
+                    <span>@param.PropName</span>
+                }
+                <div>
+                    @for (int i = 0; i < param.Links.Count; i++)
+                    {
+                        var link = param.Links[i];
+
+                        if (!string.IsNullOrEmpty(link.PropValueLink) && MvcApplication.IsTGDD())
+                        {
+                            <a href="@link.PropValueLink" target="_blank">@link.PropValue</a>
+                        }
+                        else
+                        {
+                            <p>@link.PropValue</p>
+                        }
+                        if (IsLine == false && i < param.Links.Count - 1)
+                        {
+                            {<text>, </text>
+                        }
+                    }
+                }
+                </div>
+            </li>
+        }
+    }
+</ul>
+
+
+

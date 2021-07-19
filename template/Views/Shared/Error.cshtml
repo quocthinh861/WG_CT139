@@ -1,0 +1,106 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+@using Libs;
+@{    
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lỗi 500 | Thegioididong.com - Mua bán điện thoại, dtdd, smartphone, Laptop, máy tính xách tay, Máy tính bảng chính hãng
+    </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="bitly-verification" content="811bf9d76554" />
+    <meta content="INDEX,FOLLOW" name="robots" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="copyright" content="Công ty Cổ phần Thế Giới Di Động" />
+    <meta name="author" content="Công ty Cổ phần Thế Giới Di Động" />
+    <meta http-equiv="audience" content="General" />
+    <meta name="resource-type" content="Document" />
+    <meta name="distribution" content="Global" />
+    <meta name="revisit-after" content="1 days" />
+    <meta name="GENERATOR" content="Công ty Cổ phần Thế Giới Di Động" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="publisher" href="https://plus.google.com/+Thegioididongdotcom/posts" />
+    <link rel="author" href="https://plus.google.com/+Thegioididongdotcom/posts" />
+    <meta property="og:site_name" content="Thegioididong.com" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="fb:app_id" content="505429329544659" />
+    <link href="https://www.thegioididong.com/Content/desktop/css/404.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="errorswrap">
+        <h1 class="error-500">OOPS, Gì thế nhỉ ? Thử lại nhé</h1>
+        <div class="iconlink-500">
+            <a href="@Request.Url" style="float: left">
+                <div class="error">
+                    <i class="iconerror-retry"></i>
+                    <span>Thử lại</span>
+                </div>
+            </a>
+            <a href="/" style="float: left">
+                <div class="error">
+                    <i class="iconerror-home"></i>
+                    <span>Về trang chủ</span>
+                </div>
+            </a>
+            <a href="https://www.facebook.com/thegioididongcom" style="float: right">
+                <div class="error">
+                    <i class="iconerror-contact"></i>
+                    <span>Báo lỗi</span>
+                </div>
+            </a>
+        </div>
+        <p class="or-500">Nếu bạn cần hỗ trợ, vui lòng liên hệ tổng đài <b>1800.1060</b> hoặc <b>(08) 38.102.102</b></p>
+        <img src="https://www.thegioididong.com/Content/desktop/images/avatar-500.jpg" width="980" height="474" />
+    </div>
+    @{
+        
+        string paramDetail = string.Empty;
+        if (Request.RequestType.ToUpper() == "POST")
+        {
+            foreach (var name in Request.Form.AllKeys)
+            {
+                paramDetail += string.Format("[{0}:{1}]", name, Request.Form[name]);
+            }
+        }
+        new WebLibs.SystemMessage("Lỗi: " + Model.Exception.Message, Request.Url.ToString(), Model.Exception.ToString() + (string.IsNullOrEmpty(paramDetail) ? "" : ("THAM SỐ:" + paramDetail)));
+    }
+    @if (Request.QueryString["ShowError"] != null)
+    {
+        <div>
+            <p style="font-size: 30px; font-weight: bold;">[ E R R O R ]</p>
+            <br />
+            <p>
+                <b>Exception:</b> @Model.Exception.Message<br />
+                <b>Controller:</b> @Model.ControllerName<br />
+                <b>Action:</b> @Model.ActionName<br />
+            </p>
+            <div>
+                <pre>
+                            @Model.Exception.StackTrace
+                        </pre>
+            </div>
+            <p style="font-size: 30px; font-weight: bold;">[ E X C E P T I O N ]</p>
+            <br />
+            <div>
+                <pre>
+                            @Model.Exception.ToString()
+                        </pre>
+            </div>
+        </div>
+    }
+    <!--#region GA -->
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-918185-25', 'auto', { 'siteSpeedSampleRate': 10 });
+        ga('send', 'pageview');
+    </script>
+</body>
+</html>

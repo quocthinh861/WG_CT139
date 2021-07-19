@@ -1,0 +1,14 @@
+﻿@model Thinh.Models.Product
+
+<div id="popup" class="pp-config">
+    <a href="javascript:$.colorbox.close()" class="cls"></a>
+    <b>THÔNG SỐ KĨ THUẬT</b>
+    <div class="content @(MvcApplication.IsMobileMode() ? "scroll" : "scrollbar")">
+        <h4>Thông số kỹ thuật chi tiết @Model.ProductName</h4>
+        <img id="imgKit" alt="Thông số kỹ thuật @Model.ProductId" src="@Model.Colors.FirstOrDefault().pictureField">
+        <ul class="parameterfull">
+            @Html.Raw(Model.FullSpecification)
+        </ul>
+    </div>
+</div>
+<a href="#popup" id="lpopup" style="display: none"></a>

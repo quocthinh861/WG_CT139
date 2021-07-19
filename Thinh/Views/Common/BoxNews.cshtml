@@ -1,0 +1,27 @@
+﻿@model List<thegioididong.business.ApiNews.NewsBO>
+
+@if (Model != null && Model.Count > 0)
+{
+    string videoId = ViewBag.VideoId;
+    <h2>Tin tức nổi bật</h2>
+    <div class="left">
+        @if (videoId.Length > 11) {
+            <iframe class="iframe" data-src="https://www.youtube.com/embed/videoseries?list=@(videoId)" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+        } else {
+            <iframe class="iframe" data-src="https://www.youtube.com/embed/@(videoId)?rel=0&modestbranding=1&showinfo=0&autoplay=0" frameborder="0" allowfullscreen></iframe>
+        }
+    </div>
+    <div class="right">
+        @foreach (var item in Model)
+        {
+            <div>
+                <a class="avt" href="@thegioididong.business.api.ApiNewsRepo.Current.UrlNewsDetail(item)">
+                    <img width="100" height="70" data-src="@thegioididong.business.helper.SEOHelper.GenNewsThumbImagePath(Convert.ToDateTime(item.createdDateField), Convert.ToInt32(item.newsIDField), item.thumbnailImageField.ToString())" class="lazy">
+                </a>
+                <a class="link" href="@thegioididong.business.api.ApiNewsRepo.Current.UrlNewsDetail(item)">@item.titleField</a>
+                <div>@Html.Raw(item.shortDescriptionField)</div>
+                <span>@item.createdDateField.Value.ToString("dd/MM") | @thegioididong.business.helper.ViewHelper.ShowNumber(item.viewCounterField) người đã đọc</span>
+            </div>
+        }
+    </div>
+}

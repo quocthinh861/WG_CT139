@@ -1,0 +1,31 @@
+﻿@model Thinh.Models.Order
+
+@foreach (var item in Model.Products)
+{
+    if (item.Promotions == null || item.Promotions.Count == 0) { continue; }
+    var notChoosePromotions = item.Promotions.Where(p => !p.IsChoose).ToList();
+    var choosePromotions = item.Promotions.Where(p => p.IsChoose).ToList();
+    <div class="choose radio o-promo @(choosePromotions != null && choosePromotions.Any() ? "" : "line") promo@(item.ProductId) @(Model.Products.Count == 1 ? "" : "hide")">
+        @if (notChoosePromotions != null && notChoosePromotions.Count > 0)
+        {
+            <i>Quà tặng</i>
+            foreach (var promo in notChoosePromotions) {
+                <span class="prevent">@Html.Raw(promo.PromotionName)</span>
+            }
+        }
+
+        @if (choosePromotions != null && choosePromotions.Count > 0)
+        {
+            <i>Chọn 1 trong @choosePromotions.Count khuyến mãi:</i>
+            foreach (var promo in choosePromotions)
+            {
+                if (string.IsNullOrEmpty(promo.PromotionName)) { continue; }
+                <span class="c" data-value="@promo.PromotionId">
+                    <i></i>
+                    <b>@Html.Raw(promo.PromotionName)</b>
+                </span>
+            }
+        }
+        <label class="hide">Vui lòng chọn khuyến mãi.</label>
+    </div>
+}

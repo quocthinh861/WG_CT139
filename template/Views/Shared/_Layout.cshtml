@@ -1,0 +1,115 @@
+﻿@using template.Controllers;
+@{
+    var siteId = MvcApplication.SiteId;
+    var isTGDD = MvcApplication.IsTGDD();
+    var isMobile = MvcApplication.IsMobileMode();
+    var isFromApp = MvcApplication.IsFromMobileApp();
+    var hf = thegioididong.business.helper.ViewHelper.HeaderFooter(Request.Url.ToString(), isMobile, Request["removeheaderfootercache"] != null, siteId);
+    var isonheadernew = thegioididong.business.helper.HardCode.IsOnHeaderFooter() && hf != null && !string.IsNullOrEmpty(hf.CSS);
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    @Html.Raw(BaseController.GenMetaTags())
+    @Html.Raw(thegioididong.business.helper.CmtHelper.MakeStyleComment2016("CAMPAIGN", isMobile, true))
+    @Html.Raw((isTGDD || isonheadernew) ? hf.CSS : ViewBag.GlobalCss)
+    @if (IsSectionDefined("CSS_INC"))
+        {@RenderSection("CSS_INC")}
+    <script type="text/javascript">
+        setTimeout(function () {
+            var a = document.createElement("script");
+            var b = document.getElementsByTagName("script")[0];
+            a.src = document.location.protocol + "//script.crazyegg.com/pages/scripts/0017/3880.js?" + Math.floor(new Date().getTime() / 3600000);
+            a.async = true; a.type = "text/javascript"; b.parentNode.insertBefore(a, b)
+        }, 5000);
+    </script>
+</head>
+<body>
+    @if ((isTGDD || isonheadernew))
+    {
+        if (!isFromApp)
+        {@Html.Raw(hf.Header) }
+    }
+    else
+    {
+        @Html.Raw(ViewBag.Header)
+    }
+    @RenderBody()
+    @Html.Action("BoxComment", "Common")
+    @Html.Raw((isTGDD || isonheadernew) ? hf.Footer : ViewBag.Footer)
+    <div id="dlding">Bạn vui lòng chờ trong giây lát...</div>
+    @if (isTGDD)
+    {
+        <p id="back-top" class="none"><a href="#top" title="Về Đầu Trang"><span></span></a></p>
+        <div class="over" style="display: none;"></div>
+    }
+    <script>var isTGDD = @(isTGDD ? 1 : 0);var isMobile = @(isMobile ? 1 : 0);document.showCoreBrain = true;var CHAT_ENABLED=1;</script>
+
+    <div id="fb-root"></div>
+    <script type="text/javascript">
+        setTimeout(function () {
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s); js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        }, 10000);
+    </script>
+    <!-- GA -->
+    @if (isTGDD)
+    {
+        @Html.Raw(hf.JS)
+        <script>
+            //<!-- #regionGoogle Tag Manager -->
+            setTimeout(function () {
+                (function (w, d, s, l, i) {
+                    w[l] = w[l] || []; w[l].push({
+                        'gtm.start':
+                            new Date().getTime(), event: 'gtm.js'
+                    }); var f = d.getElementsByTagName(s)[0],
+                        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                            '//www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+                })(window, document, 'script', 'dataLayer', 'GTM-WKQZL8')
+            }, 10000);
+            //<!--#endregion -->
+
+            //<!-- #regionGoogle analytics -->
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-918185-25', 'auto');
+            ga('require', 'ec');
+            ga('send', 'pageview');
+            //<!--#endregion -->
+        </script>
+    }
+    else
+    {
+        @Html.Raw(isonheadernew ? hf.JS : ViewBag.GlobalJs)
+
+        <script>
+            //<!-- #regionGoogle analytics -->
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-38936689-1', 'auto');
+            ga('require', 'ec');
+            ga('send', 'pageview');
+            //<!--#endregion -->
+        </script>
+    }
+  
+    @if (IsSectionDefined("JS_INC"))
+    {@RenderSection("JS_INC")}
+</body>
+</html>

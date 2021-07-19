@@ -1,0 +1,33 @@
+﻿@model template.Models.Customer
+@{
+    var index = 1;
+}
+
+@if (Model != null && Model.Customers != null && Model.Customers.Count > 0)
+{
+    <b>CÓ <b>@thegioididong.business.helper.ViewHelper.ShowNumber(Model.Total)</b> KHÁCH ĐẶT MUA</b>
+    foreach (thegioididong.business.SvcCrmCustomer.CRMSALEPROGRAMCUSTOMER item in Model.Customers.Take(7))
+    {
+        <span>
+            <span>
+                <b>@item.CUSTOMERNAME</b>
+                <i>@thegioididong.business.helper.ViewHelper.ShowPhoneNumber(item.CUSTOMERPHONE)</i>
+            </span>
+            <span>
+                @if(item.ISINCOME == 1) {
+                    <em class="check">Đã cọc</em>
+                    <i>@thegioididong.business.helper.ViewHelper.ShowTime(item.VOUCHERDATE, " mua")</i>
+                }
+                else
+                {
+                    <em>---</em>
+                    <i>@thegioididong.business.helper.ViewHelper.ShowTime(item.CREATEDDATE, " mua")</i>
+                }
+            </span>
+        </span>
+        index++;
+    }
+    <a href="javascript:OpenPopupUserOrder()">Xem thêm danh sách đặt mua...</a>
+} else {
+    <b>CHƯA CÓ KHÁCH HÀNG ĐẶT MUA</b>
+}

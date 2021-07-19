@@ -1,0 +1,23 @@
+﻿@using Thinh.Controllers;
+@model Thinh.Models.HomeVM
+
+@if (Model.Product.IsSoldOut) {
+    <a href="javascript:;" class="button medium gray inline">CHÁY HÀNG</a>
+} else if (BaseController.IsOffPreOrder) {
+    <a href="javascript:;" class="button medium gray inline">KẾT THÚC</a>
+} else {
+    <a href="@Model.Product.BuyUrl" class="button large orange inline">ĐẶT TRƯỚC<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+    <a href="@Model.Product.InstallmentUrl" class="button large blue inline">TRẢ GÓP@(Model.Product.IsInstallment0Percent ? " 0%" : "")<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+}
+<div class="share">
+    <div>
+        <span>Từ @Model.Product.FromDate.ToString("dd/MM") - @Model.Product.ToDate.ToString("dd/MM") | <a href="javascript:PopupHTML(@BaseController.Program.HtmlId)">Xem thể lệ</a></span>
+    </div>
+    <div>
+        <a href="javascript:OpenPopupUserOrder()">@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalOrder) khách đặt gạch (@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalPaid) khách cọc)</a>
+        <span> | </span>
+        <span>
+            Tổng đài: <a href="tel:18001060">1800.1060</a>
+        </span>
+    </div>   
+</div>

@@ -1,0 +1,12 @@
+﻿@model List<template.Models.GalleryBO>
+
+<div class="owl-slider owl-carousel tab gallery">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <a href="javascript:OpenPhotoSwipe(@(i))" class="item" data-src="@(Model[i].ZoomImage)" data-width="1920" data-height="1080">
+            <img class="lazyOwl" data-src="@Model[i].ThumbImage" />
+        </a>
+    }
+</div>
+<a class="view-large" href="javascript:OpenPhotoSwipe(0)"><img class="lazy" data-src="@template.Controllers.BaseController.UrlPath/Content/images/icon/zoom.png" /> <b>Xem ảnh phóng to</b></a>
+@Html.Partial("~/Views/Common/_PartialPhotoSwipe.cshtml")

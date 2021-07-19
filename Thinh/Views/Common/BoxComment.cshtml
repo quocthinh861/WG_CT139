@@ -1,0 +1,24 @@
+﻿@model Thinh.Models.Comment
+
+@if (Model.IsMobile)
+{
+    <section class="wrapper comment page1">
+        <span>
+            <b>THẢO LUẬN VỀ @Model.CampaignName</b>
+            <label class="like-fanpage" data-url="@Model.Url" data-width="170" data-layout="button_count"></label>
+        </span>
+        @Html.Raw(thegioididong.business.helper.CmtHelper.LoadComment2016(Model.ObjectType, Model.ObjectId, Model.Url, Model.IsMobile, Model.SiteId))
+    </section>
+}
+else
+{
+    <div id="tabComment" class="wrapper page1">
+        <div class="container comment">
+            <span>
+                <b>THẢO LUẬN VỀ @Model.CampaignName</b>
+                <label class="like-fanpage" data-url="@Model.Url" data-width="170" data-layout="button_count"></label>
+            </span>
+            @Html.Raw(thegioididong.business.helper.CmtHelper.LoadComment2016(Model.ObjectType, Model.ObjectId, Model.Url, Model.IsMobile, Model.SiteId))
+        </div>
+    </div>
+}

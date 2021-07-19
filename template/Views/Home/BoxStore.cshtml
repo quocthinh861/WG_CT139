@@ -1,0 +1,88 @@
+﻿@model template.Models.Store
+
+<div id="storeexp" class="storeexp">
+    @*@if (Model.Products != null && Model.Products.Count > 1) {
+        var idx = 0;
+        <div class="tab">
+            @if (!MvcApplication.IsMobileMode()) {<span>Chọn điện thoại:</span>}
+            @foreach (var item in Model.Products)
+            {
+                <a href="javascript:;" data-type="@(idx)" class="@(idx == Model.Type ? "active" : "")"><i></i><span>@item.ProductName</span></a>
+                idx++;
+            }  
+        </div>
+        <input type="hidden" name="hdType" value="@Model.Type" />
+    }*@
+    
+    <div id="ddlProvinceEXP" class="province inline">
+        <span data-value="@Model.ProvinceId">@(Model.ProvinceId == -1 ? "Chọn tỉnh, thành phố" : Model.ProvinceName)</span>
+        @if (Model.Provinces.Count > 1)
+        {
+            var provinceFirst = Model.Provinces.Take(Model.Provinces.Count / 2).ToList();
+            var provinceLast = Model.Provinces.Skip(provinceFirst.Count);
+            <div class="select">
+                <div class="o-search">
+                    <input type="text" name="key" placeholder="Nhập tỉnh, thành để tìm nhanh" />
+                    <button></button>
+                </div>
+                <div class="list scroll">
+                    <div class="item">
+                        @foreach (var item in provinceFirst)
+                        {
+                            <a href="javascript:;" data-value="@item.provinceIDField">@item.provinceNameField</a>
+                        }
+                    </div>
+                    <div class="item">
+                        @foreach (var item in provinceLast)
+                        {
+                            <a href="javascript:;" data-value="@item.provinceIDField">@item.provinceNameField</a>
+                        }
+                    </div>
+                </div>
+                <input type="hidden" name="hdProvinceEXPId" value="@Model.ProvinceId" />
+            </div>
+        }
+    </div>
+    <div id="ddlDistrictEXP" class="district inline">
+        <span data-value="@Model.DistrictId">@(Model.DistrictId == -1 ? "Chọn quận, huyện" : Model.DistrictName)</span>
+        <div class="select">
+            <div class="o-search">
+                <input type="text" name="key" placeholder="Nhập quận, huyện để tìm nhanh" />
+                <button></button>
+            </div>
+            @{
+                var districtFirst = Model.Districts.Take(Model.Districts.Count / 2).ToList();
+                var districtLast = Model.Districts.Skip(districtFirst.Count);
+            }
+            <div class="list scroll">
+                <div class="item">
+                    @foreach (var item in districtFirst)
+                    {
+                        <a href="javascript:;" data-value="@item.districtIDField">@item.districtNameField</a>
+                    }
+                </div>
+                <div class="item">
+                    @foreach (var item in districtLast)
+                    {
+                        <a href="javascript:;" data-value="@item.districtIDField">@item.districtNameField</a>
+                    }
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="hdDistrictEXPId" value="@Model.DistrictId" />
+    </div>
+    <div id="ddlStoreEXP" class="store @(MvcApplication.IsMobileMode() ? "scroll" : "scrollbar")">
+        @if ((Model.Stores == null || Model.Stores.Count == 0) && Model.ProvinceId > 0)
+        {
+            <span class="no">Không tìm thấy siêu thị trải nghiệm.</span>
+        }
+        else
+        {
+            foreach (var objStore in Model.Stores)
+            {
+                <span>@((objStore.siteIDField == 1 ? "" : (objStore.siteIDField == 2 ? "ĐMX - " : "TRANANH - ")) + (string.IsNullOrEmpty(objStore.webAddressField) ? objStore.storeAddressField : objStore.webAddressField))</span>
+            }
+        }
+
+    </div>
+</div>

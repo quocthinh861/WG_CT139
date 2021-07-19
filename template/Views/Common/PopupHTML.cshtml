@@ -1,0 +1,10 @@
+﻿@model int
+
+<div id="popup" class="info">
+    <a href="javascript:$.colorbox.close()" class="cls"></a>
+    <b>THÔNG TIN CHƯƠNG TRÌNH</b>
+    <div class="content @(MvcApplication.IsMobileMode() ? "scroll" : "scrollbar")">
+        @Html.Raw(thegioididong.business.helper.ConfigHelper.GetHtmlInfoByID(Model))
+    </div>
+</div>
+<a href="#popup" id="lpopup" style="display: none"></a>

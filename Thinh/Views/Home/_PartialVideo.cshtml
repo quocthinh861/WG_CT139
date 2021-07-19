@@ -1,0 +1,33 @@
+﻿@model Thinh.Models.ProgramBO
+
+@if (Model != null && !string.IsNullOrEmpty(Model.VideoId)) {
+    var arr = Model.VideoId.Split('|');
+    if (arr.Length > 1) {
+        var videoId = arr[1];
+        if (!string.IsNullOrEmpty(videoId)) {
+            if (MvcApplication.IsMobileMode()) {
+                var isBg = !string.IsNullOrEmpty(Model.BackgroundVideoMobi);
+                <section class="wrapper video page1">
+                    <a href="javascript:;" class="youtube@(isBg ? "" : " play")" data-videoid="@videoId">
+                        @if (string.IsNullOrEmpty(Model.BackgroundVideoMobi)) {
+                            <img class="lazy" data-src="https://img.youtube.com/vi/@(videoId)/sddefault.jpg" />
+                        } else {
+                            <img class="lazy" data-src="@Model.BackgroundVideoMobi" />
+                        }
+                    </a> 
+                </section>
+            } else {
+                var isBg = !string.IsNullOrEmpty(Model.BackgroundVideoDesk);
+                <section class="wrapper video page1 @(isBg ? "lazybg" : "")" data-background="@Model.BackgroundVideoDesk">
+                    <div class="container">
+                        <a href="javascript:;" class="youtube@(isBg ? "" : " play")" data-videoid="@videoId">
+                            @if (!isBg) {
+                                <img src="https://img.youtube.com/vi/@(videoId)/sddefault.jpg" />
+                            }                        
+                        </a>
+                    </div>
+                </section>
+            }   
+        } 
+    }
+}

@@ -1,0 +1,57 @@
+﻿@using Thinh.Controllers;
+@model Thinh.Models.OrderSuccess
+@{
+    var version = new Random().Next();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string urlPath = BaseController.UrlPath;
+    var isMobile = MvcApplication.IsMobileMode();
+    var text = Model.IsPaymentSuccess ? "xác nhận đơn hàng" : "hướng dẫn đặt cọc";
+}
+
+@section CSS_INC {
+    @if (Request.Url.ToString().Contains(".thegioididong.com") || Request.Url.ToString().Contains(".dienmayxanh.com")) {
+        @Html.Raw(thegioididong.business.helper.ViewHelper.CssInline(urlPath, (isMobile ? "mobile" : "desktop") + ".min.css"))
+    } else {
+        <link href="~/Content/@(isMobile ? "mobile" : "desktop").css?v=@version" rel="stylesheet" />
+    }
+}
+
+@section JS_INC {
+    <script>var rootUrl = '@(urlPath)';var method = -2;</script>
+    <script src="~/Scripts/preorder.min.js"></script>
+    <script>$(document).ready(function () { $('footer, .comment').remove(); });</script>
+}
+
+<section class="wrapper success payment @(MvcApplication.IsFromMobileApp() ? "" : MvcApplication.IsTGDD() ? "sf" : "sx")">
+    @if (!isMobile) { 
+        @Html.Raw("<div class=\"container\">");
+        <span class="o-title">ĐẶT TRƯỚC<b> @Model.CampaignName</b></span>
+    }
+    <div class="success">
+        @if (Model.IsPaymentSuccess) {
+            <h3>THANH TOÁN THÀNH CÔNG!</h3>
+            <span>
+                Cảm ơn <b>@Model.Gender @Model.FullName</b> đã cho chúng tôi cơ hội được phục vụ. Đơn hàng của @Model.Gender đã được ghi nhận.
+            </span>
+        } else {
+            <h3 class="red">THANH TOÁN KHÔNG THÀNH CÔNG!</h3>
+            <span>
+                Rất tiếc <b>@Model.Gender @Model.FullName</b> đã thanh toán trực tuyến không thành công. Cảm ơn <b>@Model.Gender @Model.FullName</b> đã cho chúng tôi cơ hội được phục vụ.
+            </span>
+        }
+
+        <b>Thông tin đặt hàng</b>
+        <span class="num">Tổng tiền: <strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Price)</strong></span>
+        <span class="num">Số tiền @(Model.IsPaymentSuccess ? "đã" : "đặt") cọc: <strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.SalePrice)</strong> <b>(trước 22h00 @Model.DateOffPaid)</b>.</span>
+        <span class="num">@(Model.Method == (int)BaseController.MethodType.AtHome ? "Địa chỉ" : "Siêu thị") @(Model.IsPaymentSuccess ? "nhận máy" : "đặt cọc")@(Model.Method == (int)BaseController.MethodType.Installment ? " và làm hồ sơ trả góp" : ""): <b>@Model.StoreAddress</b></span>
+        <span class="num">Thời gian nhận hàng dự kiến: từ <b>@Model.DateReceived</b>. (Cam kết giao trễ 1 ngày giảm 1%, tối đa 5% trên giá bán)</span>
+
+        @if (MvcApplication.IsTGDD()) {
+            <span>Khi cần trợ giúp vui lòng gọi <a href="tel:18001060">1800.1060</a> hoặc <a href="tel:02838102102">(028)38.102.102</a> (7:30 - 22:00).</span>
+        } else {
+            <span>Khi cần trợ giúp vui lòng gọi <a href="@BaseController.Hotline(true)">@BaseController.Hotline()</a>.</span>
+        }
+    </div>
+    <a href="@Model.Url" class="o-back">< Về trang chi tiết chương trình</a>
+    @if (!isMobile) { @Html.Raw("</div>"); }
+</section>

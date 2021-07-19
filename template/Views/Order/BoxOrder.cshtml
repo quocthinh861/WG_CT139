@@ -1,0 +1,265 @@
+﻿@model template.Models.Order
+@{
+    var idx = 0;
+    var productName = Model.ProgramName;
+    var isHide = Model.ProductId <= 0 && Model.Products.Count > 1;
+    var isMobile = MvcApplication.IsMobileMode();
+    var step = 1;
+    var isChoosePromo = Model.Product.Promotions != null && Model.Product.Promotions.Any(p => p.IsChoose);
+}
+
+@if (Model != null)
+{
+    if (!isMobile)
+    {
+        <span class="o-title">ĐẶT TRƯỚC<b> @productName</b></span>
+    }
+    <form id="frmOrder" class="order recaptcha-holder">
+        <img class="o-img" src="@(Model.Product.Colors.FirstOrDefault().pictureField)" title="@Model.Product.ProductName" />
+        <div class="fl">
+            @if (isMobile)
+            {
+                <span class="o-title">ĐẶT TRƯỚC<b> @productName</b></span>
+            }
+            <div class="o-price@(isHide ? " hide" : "")">
+                <i class="inline">Giá @Model.Product.Text:</i>
+                <strong class="price">
+                    @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.Price)
+                </strong>
+                @if (Model.Product.HisPrice > Model.Product.Price)
+                {
+                    <span class="hisprice">@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.HisPrice)</span>
+                }
+            </div>
+            @if (Model.IsRunPreOrder && Model.Product.SalePrice > 0)
+            {
+                <div class="o-price">
+                    <i class="inline">Cọc:</i>
+                    <strong>
+                        <b id="saleprice">@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</b> <em>(Trước @(Model.PreOrderToDate.ToString("HH\\hmm \\n\\g\\à\\y dd/MM")))</em>
+                    </strong>
+                </div>
+            }
+            @if (!isMobile && !isChoosePromo)
+            {@Html.Partial("~/Views/Order/_PartialPromotion.cshtml")}
+        </div>
+        @if (isMobile && !isChoosePromo)
+        {
+            <div class="clr"></div>
+            @Html.Partial("~/Views/Order/_PartialPromotion.cshtml")
+        }
+        @if (Model.Product.IsLimitColor)
+        {
+            <div class="o-limit">Số lượng sản phẩm có hạn, TGDD/ĐMX xin phép ngừng hỗ trợ đặt hàng khi đã đủ số suất.</div>
+        }
+        <div class="o-line"></div>
+        @if (Model.Product.GroupId > 0)
+        {
+            <div class="o-group radio">
+                <i class="normal"><b>Bước @step:</b> Chọn sản phẩm</i>
+                @for (int i = 0; i < Model.Products.Count; i++)
+                {
+                    if (!Model.Products[i].IsShow) { continue; }
+                    var item = Model.Products[i];
+                    <span class="check @(Model.ProductId > 0 && Model.Product.GroupId == item.GroupId ? "active" : "")" data-img="@(item.Colors.FirstOrDefault().pictureField)" data-group="@item.GroupId" data-price="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.Price)" data-productid="@item.ProductId" data-credit="@item.InstallmentUrlCreditCard" data-installment="@item.InstallmentUrlMain"><i></i><b>@item.FirstName</b></span>
+                    step = 2;
+                }
+                <label class="hide">Vui lòng chọn sản phẩm.</label>
+            </div>
+            <div class="o-model hide radio">
+                <i class="normal"><b>Bước @step:</b> Chọn dung lượng</i>
+                @foreach (var item in Model.Products)
+                {
+                    <span data-img="@(item.Colors.FirstOrDefault().pictureField)" data-value="@item.ProductId" data-saleprice="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.SalePrice)" data-price="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.Price)" class="@(Model.Product.GroupId == item.GroupId ? (Model.Product.ProductId == item.ProductId ? "active" : "") : "hide") check" data-order="@item.TotalOrder" data-sms="@item.TotalPaid" data-group="@item.GroupId" data-credit="@item.InstallmentUrlCreditCard" data-installment="@item.InstallmentUrlMain"><i></i><b>@item.LastName</b><strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(item.Price)</strong></span>
+                    step = 3;
+                }
+                <label class="hide">Vui lòng chọn dung lượng.</label>
+            </div>
+        }
+        else if (Model.Products.Count > 1)
+        {
+            <div class="o-model radio">
+                <i class="normal"><b>Bước @step:</b> Chọn sản phẩm</i>
+                @foreach (var item in Model.Products)
+                {
+                    <span class="check @(Model.ProductId > 0 && Model.Product.GroupId == item.GroupId ? "active" : "")" data-img="@(item.Colors.FirstOrDefault().pictureField)" data-value="@item.ProductId" data-saleprice="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.SalePrice)" data-price="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.Price)" data-hisprice="@thegioididong.business.helper.ViewHelper.FormatCurrency(item.HisPrice)" data-order="@item.TotalOrder" data-sms="@item.TotalPaid" data-credit="@item.InstallmentUrlCreditCard" data-installment="@item.InstallmentUrlMain"><i></i><b>@item.ProductName</b></span>
+                    step = 2;
+                }
+                <label class="hide">Vui lòng chọn sản phẩm.</label>
+            </div>
+        }
+
+        <div class="o-color radio@(Model.Products.Count > 1 ? " hide" : "")">
+            <i class="normal">
+                @if (step > 1)
+                {<b>Bước @step:</b>} @(Model.Products.Count == 1 && Model.Products.FirstOrDefault().Colors.Count == 1 ? "Màu sắc" : "Chọn màu sản phẩm")
+            </i>
+            @foreach (var item in Model.Products)
+            {
+                foreach (var objColor in item.Colors)
+                {
+                    <span data-img="@(objColor.pictureField)" data-value="@objColor.productCodeField" data-credit="@objColor.iconField" class="check p@(objColor.productIDField) @(objColor.productIDField != Model.ProductId ? "hide" : "")" data-soldout="@(objColor.isExistField ? 1 : 0)">
+                        <span><img src="@objColor.pictureField" /></span>
+                        <i></i>
+                        <em>@Html.Raw(objColor.colorNameField)</em>
+                    </span>
+                }
+            }
+            <label class="hide">Vui lòng chọn<br />màu sản phẩm.</label>
+            <label class="hide soldout">Rất tiếc màu quý khách chọn đã hết suất. Quý khách vui lòng chọn sang màu khác.</label>
+        </div>
+        @if (isChoosePromo)
+        {
+            <div class="o-line"></div>
+            @Html.Partial("~/Views/Order/_PartialPromotion.cshtml")
+            <div class="o-line"></div>
+        }
+        <div class="o-gender radio">
+            <i>@*Thông tin người mua*@</i>
+            <span data-value="1" @(Model.Cookie.Gender == 1 ? "class=active" : "")>
+                <i></i>
+                <b>Anh</b>
+            </span>
+            <span data-value="0" @(Model.Cookie.Gender == 0 ? "class=active" : "")>
+                <i></i>
+                <b>Chị</b>
+            </span>
+            <label class="hide">Vui lòng chọn danh xưng.</label>
+            <br />
+            <div class="o-fullname">
+                <input class="input" id="txtFullName" type="text" name="txtFullName" placeholder="Họ và tên" value="@Model.Cookie.FullName" />
+                <label class="hide">Vui lòng nhập Họ và Tên.</label>
+            </div>
+            <div class="o-phonenumber">
+                <input class="input" id="txtPhoneNumber" type="tel" name="txtPhoneNumber" placeholder="Số điện thoại" value="@Model.Cookie.PhoneNumber" />
+                <label class="hide">Số điện thoại trống/không đúng định dạng.</label>
+            </div>
+            <input type="text" class="input full" name="txtOtherRequest" placeholder="Yêu cầu khác (không bắt buộc)" />
+        </div>
+        @if (!string.IsNullOrEmpty(Model.UserNameCTV))
+        {
+            <div class="infor-ctv" style="background: #fff3c2; padding: 10px; border: 1px solid #fbdebe;">
+                <b style=" padding: 0; ">
+                    Cộng tác viên tạo đơn hàng:
+                </b>
+                <strong style=" color: #d20e24; font-size: 14px;">
+                    @Html.Raw(Model.UserNameCTV)
+                </strong>
+            </div>
+        }
+        @if (Model.Method == -1)
+        {
+            <div class="o-method radio">
+                <i>Phương thức thanh toán</i>
+                <span data-value="1">
+                    <i></i>
+                    <b>@Model.Text và nhận hàng tại siêu thị</b>
+                </span>
+                @*<span data-value="3">
+                        <i></i>
+                        <b>@Model.Text và nhận hàng tại nhà</b>
+                    </span>
+                    <span data-value="6">
+                        <i></i>
+                        <b>Trả góp 0% <a href="@Model.Product.InstallmentUrlMain" target="_blank">(Xem chi tiết)</a></b>
+                    </span>*@
+                @if (!Model.IsSMS && !MvcApplication.IsTRANANH())
+                {
+                    <span data-value="2">
+                        <i></i>
+                        <b>Thanh toán trực tuyến(ATM, Visa, Master) <em>Với thẻ ATM cần có Internet Banking</em></b>
+                    </span>
+                }
+                <label class="hide">Vui lòng chọn phương thức thanh toán.</label>
+            </div>
+        }
+        else
+        {
+            @Html.Action("BoxStore", new { method = Model.Method, provinceId = Model.Cookie != null && Model.Cookie.ProvinceId > 0 ? Model.Cookie.ProvinceId : 3, districtId = Model.Cookie != null && Model.Cookie.DistrictId > 0 ? Model.Cookie.DistrictId : -1 })
+        }
+
+        @if (Model.IsShowCaptcha)
+        {
+            <div class="o-captcha" style="height:0;">
+                <div class="g-recaptcha" data-sitekey="6LdjGgcaAAAAAJQ8ucRoMhdyKXlUxGdrEycRnACr" data-size="invisible"></div>
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <script type="text/javascript" class="hide">
+                    setTimeout(function () {
+                        if (typeof (grecaptcha) != undefined) {
+                            grecaptcha.execute();
+                        }
+                    }, 500);
+                </script>
+            </div>
+        }
+        @if (Model.IsOff)
+        {
+            <a href="javascript:void(0)" class="button medium gray ml210">KẾT THÚC</a>
+        }
+        else
+        {
+            if (Model.Method == -1)
+            {
+                if (!MvcApplication.IsTRANANH())
+                {
+                    <div class="o-payment step31 hide">
+                        <a href="javascript:QuickOrder(4)" class="button large atm fl">THẺ ATM NỘI ĐỊA<i>Có Internet Banking</i></a>
+                        <a href="javascript:QuickOrder(5)" class="button large visa one fr">THẺ VISA, MASTER</a>
+                    </div>
+                }
+                if (Model.Product.SalePrice > 0)
+                {
+                    <a id="btnSubmit" href="javascript:QuickOrder(-1)" class="button orange large">HOÀN TẤT<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+                }
+                else
+                {
+                    <a id="btnSubmit" href="javascript:QuickOrder(-1)" class="button orange medium">HOÀN TẤT</a>
+                }
+            }
+            else
+            {
+                var isCredit = Model.Product.IsInstallmentCredit && MvcApplication.IsTGDD();
+                var blank = isMobile ? "" : "target=_blank";
+                <div class="o-payment step31">
+                    <div class="@(isCredit ? "fl" : "inline")">
+                        @if (Model.Product.SalePrice > 0)
+                        {
+                            <a href="javascript:QuickOrder(6)" class="button large atm">TRẢ GÓP@(Model.Product.IsInstallment0Percent ? " 0% " : " ")QUA CÔNG TY TÀI CHÍNH<i>Cọc @thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.SalePrice)</i></a>
+                        }
+                        else
+                        {
+                            <a href="javascript:QuickOrder(6)" class="button medium atm one">TRẢ GÓP@(Model.Product.IsInstallment0Percent ? " 0% " : " ")QUA CÔNG TY TÀI CHÍNH</a>
+                        }
+                        <a href="@Model.Product.InstallmentUrlMain" @(blank) class="link installment">Xem chi tiết</a>
+                    </div>
+                    @if (isCredit)
+                    {
+                        <div class="fr">
+                            <a href="javascript:QuickOrder(7)" class="button large visa">TRẢ GÓP@(Model.Product.IsInstallment0PercentCredit ? " 0% " : " ")QUA THẺ TÍN DỤNG<i>Thanh toán <span class="price">@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Product.Price)</span></i></a>
+                            <a href="javascript:PopupHTML(1835)" class="link">Xem chi tiết</a>
+                        </div>
+                    }
+                </div>
+            }
+        }
+        @*@if (Model.IsSMS) {
+                <a id="link" href="javascript:OpenPopupUserSMS(@Model.ProductId)" class="ml210 link">Xem <span id="totalOrder">@(thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalOrder))</span> khách hàng mua (<span id="totalSMS">@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalPaid)</span> khách SMS)</a>
+            } else {
+                <a id="link" href="javascript:OpenPopupUserOrder(@Model.ProductId)" class="ml210 link">Xem <span id="totalOrder">@(thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalOrder))</span> khách hàng mua (<span id="totalSMS">@thegioididong.business.helper.ViewHelper.ShowNumber(Model.TotalPaid)</span> khách cọc)</a>
+            }*@
+
+        <input type="hidden" name="txtGroupId" value="@(Model.ProductId > 0 ? Model.Product.GroupId : -1)" />
+        <input type="hidden" name="txtProductId" value="@(Model.ProductId > 0 ? Model.ProductId : -1)" />
+        <input type="hidden" name="txtProductCode" value="" />
+        <input type="hidden" name="txtGender" value="@Model.Cookie.Gender" />
+        <input type="hidden" name="txtStoreId" value="0" />
+        <input type="hidden" name="txtMethod" value="@Model.Method" />
+        <input type="hidden" name="txtPromotion" value="0" />
+        <input type="hidden" name="txtGroup" value="0" />
+        <input type="hidden" name="hdProvinceId" value="@(Model.Cookie.ProvinceId == -1 ? 3 : Model.Cookie.ProvinceId)" />
+        <input type="hidden" name="hdProvinceName" value="" />
+        <input type="hidden" name="hdDistrictId" value="@Model.Cookie.DistrictId" />
+        <input type="hidden" name="hdDistrictName" value="" />
+    </form>
+    <a href="@Model.Url" class="o-back">< Về trang chi tiết chương trình</a>
+}

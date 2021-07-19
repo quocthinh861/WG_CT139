@@ -1,0 +1,78 @@
+﻿@using template.Controllers;
+@model template.Models.OrderSuccess
+
+@if (Model.IsPayment)
+{
+    <div class="success">
+        <span class="tc">Đang chuyển thanh toán...</span>
+    </div>
+    <script>
+        $(document).ready(function () {
+            productga.identifier = @Model.ProductId;
+            productga.fn = '[@(Model.CampaignName)] - ' + '@Model.ProductName';
+            productga.category = ['@Model.CategoryName', ''];
+            productga.variant = '@Model.ProductCode';
+            productga.price = @Model.Price;
+            if (typeof productga != 'undefined') {
+                ga_completeOrder(productga.identifier, productga.fn, productga.category[0], productga.category[1], productga.variant, productga.price, 1);
+                ga_conversion(@Model.Method);
+            }
+
+            //Tracking đặt hàng
+            ga('send', 'event', '@Model.CampaignName', '@(Model.MethodName)', '@(Model.ProductName)');
+
+            window.location.href = '@Html.Raw(Model.LinkRedirect)';
+        });
+    </script>
+}
+else
+{
+    var text = BaseController.IsRunPreOrder ? "hướng dẫn đặt cọc" : "xác nhận đơn hàng";
+    <div class="success">
+        <h3>ĐẶT HÀNG THÀNH CÔNG!</h3>
+        <span>
+            Cảm ơn <b>@Model.Gender @Model.FullName</b> đã cho chúng tôi cơ hội được phục vụ.
+            @if (Model.Method == (int)BaseController.MethodType.AtStore) {
+                <text>Đơn hàng của @Model.Gender đã được ghi nhận.</text>
+            } else if (BaseController.Is0H00To7H30 || BaseController.Is9H30To23H59) {
+                <text>Mời @Model.Gender đến trực tiếp siêu thị để đặt cọc.</text>
+            } else {
+                <text>Nhân viên sẽ liên hệ @Model.Gender để @text trong vòng <b>5 phút</b>.</text>
+            }
+        </span>
+        <b>Thông tin đặt hàng</b>
+        @if (BaseController.IsOnLaunching) {
+            <span>Tổng tiền: <strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Price)</strong></span>
+            <span>@(Model.Method == (int)BaseController.MethodType.AtHome ? "Địa chỉ" : "Siêu thị") đặt cọc@(Model.Method == (int)BaseController.MethodType.Installment ? " và làm hồ sơ trả góp" : ""): <b>@Model.StoreAddress</b></span>
+        }
+        else
+        {
+            <span class="num">Tổng tiền: <strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.Price)</strong></span>
+            <span class="num">Số tiền đặt cọc: <strong>@thegioididong.business.helper.ViewHelper.FormatCurrency(Model.SalePrice)</strong> <b>(trước 22h00 @Model.DateOffPaid)</b>.</span>
+            <span class="num">@(Model.Method == (int)BaseController.MethodType.AtHome ? "Địa chỉ" : "Siêu thị") đặt cọc@(Model.Method == (int)BaseController.MethodType.Installment ? " và làm hồ sơ trả góp" : ""): <b>@Model.StoreAddress</b></span>
+            <span class="num">Thời gian nhận hàng dự kiến: từ <b>@Model.DateReceived</b>. (Cam kết giao trễ 1 ngày giảm 1%, tối đa 5% trên giá bán)</span>
+        }
+
+        @if (MvcApplication.IsTGDD()) {
+            <span>Khi cần trợ giúp vui lòng gọi <a href="tel:18001060">1800.1060</a> hoặc <a href="tel:02838102102">(028)38.102.102</a> (7:30 - 22:00).</span>
+        } else {
+            <span>Khi cần trợ giúp vui lòng gọi <a href="@BaseController.Hotline(true)">@BaseController.Hotline()</a>.</span>
+        }
+    </div>
+    <script>
+        $(document).ready(function () {
+            productga.identifier = @Model.ProductId;
+            productga.fn = '[@(Model.CampaignName)] - ' + '@Model.ProductName';
+            productga.category = ['@Model.CategoryName', ''];
+            productga.variant = '@Model.ProductCode';
+            productga.price = @Model.Price;
+            if (typeof productga != 'undefined') {
+                ga_completeOrder(productga.identifier, productga.fn, productga.category[0], productga.category[1], productga.variant, productga.price, 1);
+                ga_conversion(1);
+            }
+
+            //Tracking đặt hàng
+            ga('send', 'event', '@Model.CampaignName', '@(Model.MethodName)', '@(Model.ProductName)');
+        });
+    </script>
+}
